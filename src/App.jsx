@@ -137,7 +137,7 @@ export function App({ gmApiKey }) {
             </div>
           </div>
         </div>
-
+        <FunFacts />
         <div className="footer">
           <div className="container-lg">
             <footer>
@@ -163,7 +163,7 @@ export function App({ gmApiKey }) {
                   )
                 }
               </ul>
-              <FunFacts />
+
             </footer>
           </div>
         </div>
