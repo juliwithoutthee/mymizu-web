@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import GoogleMapReact from "google-map-react";
 import axios from "axios";
 import { IntlProvider } from "react-intl";
+import { FunFacts } from "./components/FunFacts";
 
 const translations = {
   en: require("./translations/en.json"),
@@ -162,6 +163,7 @@ export function App({ gmApiKey }) {
                   )
                 }
               </ul>
+              <FunFacts />
             </footer>
           </div>
         </div>
