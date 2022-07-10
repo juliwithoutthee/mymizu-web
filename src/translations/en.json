@@ -2,5 +2,50 @@
   "topnav.map": "How to Use the Map",
   "topnav.about": "About mymizu",
   "topnav.community": "Participate in the  Community",
-  "topnav.partners": "Introduce mymizu to Store"
+  "topnav.partners": "Introduce mymizu to Store",
+  "funfacts": [
+    {
+      "emoji": "",
+      "fact": "740 plastic bottles are bought in Japan every second."
+    },
+    {
+      "emoji": "",
+      "fact": "More than 8 million tons of plastic are dumped into our oceans every year."
+    },
+    {
+      "emoji": "",
+      "fact": "Approximately 2 million plastic bags are used every minute around the world."
+    },
+    {
+      "emoji": "",
+      "fact": "The average plastic bag is used for only 12 minutes!"
+    },
+    {
+      "emoji": "",
+      "fact": "Global plastic production has doubled in the past 50 years."
+    },
+    {
+      "emoji": "",
+      "fact": "It's estimated that 50% of the plastic we consume is used just once and thrown away."
+    },
+    {
+      "emoji": "",
+      "fact": "Approximately 90 percent of all trash floating on the ocean's surface is plastic, with 46,000 pieces of plastic per square mile."
+    },
+    {
+      "emoji": "",
+      "fact": "There are over 5 trillion pieces of plastic in our oceans – enough to circle the Earth over 400 times."
+    },
+    {
+      "emoji": "",
+      "fact": "Japan is the world's second-biggest producer per capita of plastic waste behind the U.S."
+    },
+    {
+      "emoji": "",
+      "fact": "Over 25 billion PET bottle products are produced every year in Japan, equal to approximately 180 bottles per person."
+    },     {
+      "emoji": "",
+      "fact": "By 2050, it is estimated that there will be more plastic than fish in the sea."
+    }
+  ]
 }
