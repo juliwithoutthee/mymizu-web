@@ -102,6 +102,7 @@ export function App({ gmApiKey }) {
             </div>
             <span className="hamburger d-sm-inline d-md-inline d-lg-none" onClick={handleNav}>&#9776;</span>
           </div>
+<<<<<<< HEAD
           <div className="overlay" style={{
             left: navOpen ? "0%" : "-100%",
           }}>
@@ -113,6 +114,20 @@ export function App({ gmApiKey }) {
               <div className="nav-container">
                 { socialNav.map((el, i) => <a href={el.href} key={i}><i className={`bi ${el.iconName}`} /></a>) }
               </div>
+=======
+          <span className="hamburger d-sm-inline d-md-inline d-lg-none" onClick={handleNav}>&#9776;</span>
+        </div>
+        <div className="overlay" style={{
+          left: navOpen ? "0%" : "-100%",
+        }}>
+          <div className="overlay-content">
+            <span className="closebtn" onClick={handleNav} >&times;</span>
+            <div className="nav-container">
+              { allNav.map((el, i) => <a href={el.href} key={i}>{el.title}</a>) }
+            </div>
+            <div className="nav-container">
+              { socialNav.map((el, i) => <a href={el.href} key={i}><i className={`bi ${el.iconName}`} /></a>) }
+>>>>>>> Neo: added more links to the hamburger
             </div>
           </div>
         </nav>
