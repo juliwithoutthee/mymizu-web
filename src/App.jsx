@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from "react";
 import GoogleMapReact from "google-map-react";
 import axios from "axios";
-import { IntlProvider, FormattedMessage }  from "react-intl";
-import i18nConfig from "./i18nConfig";
+import { IntlProvider } from "react-intl";
 
 const translations = {
   en: require("./translations/en.json"),
   ja: require("./translations/ja.json")
 };
+const i18nConfig = {
+  // TODO: locale should be stored in state and use users's locale by default
+  locale: "ja",
+  defaultLocale: "ja",
+  messages: translations["ja"]
+};
+
 const Marker = () => <div className="marker"><img className="pin" src="/public/images/map-pin.svg" /></div>;
 
 export function App({ gmApiKey }) {
@@ -15,7 +21,6 @@ export function App({ gmApiKey }) {
   const [loading, setLoading] = useState(false);
   const [initialLoad, setInitialLoad] = useState(false);
   const [taps, setTaps] = useState([]);
-  const [locale, setLocale] = useState("ja");
 
   const handleNav = () => {
     setNavOpen(!navOpen);
@@ -30,25 +35,24 @@ export function App({ gmApiKey }) {
   }
 
   const topNav = [
-    { id: "topnav.map", href: "https://mymizu.co/en/how-to", title: "給水MAPの使い方" },
-    { id: "topnav.about", href: "https://mymizu.co/en-home", title: "mymizuについて" },
-    { id: "topnav.community", href: "https://www.mymizu.co/en/business", title: "コミュニティに参加" },
-    { id: "topnav.partners", href: "https://github.com/mymizu/mymizu-web", title: "mymizuについて" },
-    { id: "topnav.feedback", href: "https://sij3.typeform.com/to/qADeh9", title: "お店にmymizuを紹介" },
+    { id: "topnav.map", ref: "#", title: "給水MAPの使い方" },
+    { id: "topnav.about", ref: "#", title: "mymizuについて" },
+    { id: "topnav.community", ref: "#", title: "コミュニティに参加" },
+    { id: "topnav.about", ref: "#", title: "mymizuについて" },
+    { id: "topnav.partners", ref: "#", title: "お店にmymizuを紹介" },
   ]
 
   const socialNav = [
-    { href: "https://www.instagram.com/mymizu.co/", iconName: "bi-instagram" },
-    { href: "https://www.facebook.com/mymizu.co/", iconName: "bi-facebook" },
-    { href: "https://www.twitter.com/mymizuco/", iconName: "bi-twitter" },
+    { href: "#", iconName: "bi-instagram" },
+    { href: "#", iconName: "bi-facebook" },
+    { href: "#", iconName: "bi-twitter" },
   ]
 
   const footerNav = [
-    { id: "footernav.joinus", href: "https://www.mymizu.co/action-app-en", title: "給水MAPの使い方" },
-    { id: "footernav.supporters", href: "https://www.mymizu.co/partners-en", title: "mymizuについて" },
-    { id: "footernav.contact", href: "https://www.mymizu.co/contact-us-en", title: "コミュニティに参加" },
-    { id: "footernav.policy", href: "https://legal.mymizu.co/privacy", title: "mymizuについて" },
-    { id: "footernav.terms", href: "https://legal.mymizu.co/terms", title: "お店にmymizuを紹介" },
+    { href: "#", title: "マイボトルを購入" },
+    { href: "#", title: "mymizuサポーター" },
+    { href: "#", title: "フィードバックを送信" },
+    { href: "#", title: "お問い合わせ" },
   ]
 
   const getInitialTaps = async () => {
@@ -74,7 +78,7 @@ export function App({ gmApiKey }) {
   }, [taps, setInitialLoad, initialLoad, setTaps]);
 
   return (
-    <IntlProvider messages={translations[locale]} locale={locale} defaultLocale={i18nConfig.defaultLocale}>
+    <IntlProvider messages={i18nConfig.messages} locale={i18nConfig.locale} defaultLocale={i18nConfig.defaultLocale}>
       <div>
         {/* Header */}
         <nav className="navbar navbar-expand-lg bg-light">
@@ -85,17 +89,12 @@ export function App({ gmApiKey }) {
                 {
                   topNav.map((el, i) =>
                     <li className="nav-item" key={i}>
-                      <a className="nav-link" href={el.href}>
-                        <FormattedMessage
-                          id={el.id}
-                          defaultMessage=""
-                        />
-                      </a>
+                      <a className="nav-link" href={el.href}>{el.title}</a>
                     </li>
                   )
                 }
                 <li className="nav-item lang-selector">
-                  <a className="nav-link" href="#" onClick={() => setLocale("ja")}>JP</a> | <a className="nav-link" href="#" onClick={() => setLocale("en")}>EN</a>
+                  <a className="nav-link" href="#">JP</a> | <a className="nav-link" href="#">EN</a>
                 </li>
               </ul>
             </div>
@@ -107,22 +106,7 @@ export function App({ gmApiKey }) {
             <div className="overlay-content">
               <span className="closebtn" onClick={handleNav} >&times;</span>
               <div className="nav-container">
-                { [...topNav, ...footerNav].map((el, i) => (
-                    <a href={el.href} key={i}>
-                      <FormattedMessage
-                        id={el.id}
-                        defaultMessage=""
-                      />
-                    </a>
-                   ) 
-                  )
-                }
-                { socialNav.map((el, i) => (
-                  <a href={el.href} key={i}>
-                    <i className={`bi ${el.iconName}`} />
-                  </a>
-                  )
-                )}
+                {topNav.map((el, i) => <a href={el.href} key={i}>{el.title}</a>)}
               </div>
             </div>
           </div>
@@ -133,9 +117,9 @@ export function App({ gmApiKey }) {
             bootstrapURLKeys={{ key: gmApiKey }}
             defaultCenter={gmDefaultProps.center}
             defaultZoom={gmDefaultProps.zoom}>
-            { !loading && taps.length ? taps.map((tap) =>
+            {!loading && taps.length ? taps.map((tap) =>
               <Marker key={tap.id} lat={tap.latitude} lng={tap.longitude} />
-            ) : null }
+            ) : null}
           </GoogleMapReact>
         </div>
 
@@ -155,33 +139,30 @@ export function App({ gmApiKey }) {
 
         <div className="footer">
           <div className="container-lg">
-          <footer>
-            <ul className="nav justify-content-center">
-              {
-                socialNav.map((el, i) =>
-                  <li className="nav-item" key={i}>
-                    <a href={el.href} className="nav-link px-2 text-muted">
-                      <i className={`bi ${el.iconName}`} />
-                    </a>
-                  </li>
-                )
-              }
-            </ul>
-            <ul className="nav justify-content-center">
-              {
-                footerNav.map((el, i) =>
-                  <li className="nav-item" key={i}>
-                    <a href={el.href} className="nav-link px-2">
-                      <FormattedMessage
-                        id={el.id}
-                        defaultMessage=""
-                      />
-                    </a>
-                  </li>
-                )
-              }
-            </ul>
-          </footer>
+            <footer>
+              <ul className="nav justify-content-center">
+                {
+                  socialNav.map((el, i) =>
+                    <li className="nav-item" key={i}>
+                      <a href={el.href} className="nav-link px-2 text-muted">
+                        <i className={`bi ${el.iconName}`} />
+                      </a>
+                    </li>
+                  )
+                }
+              </ul>
+              <ul className="nav justify-content-center">
+                {
+                  footerNav.map((el, i) =>
+                    <li className="nav-item" key={i}>
+                      <a href={el.href} className="nav-link px-2">
+                        {el.title}
+                      </a>
+                    </li>
+                  )
+                }
+              </ul>
+            </footer>
           </div>
         </div>
 
