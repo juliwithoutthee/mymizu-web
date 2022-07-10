@@ -43,6 +43,8 @@ export function App({ gmApiKey }) {
     { href: "#", title: "お問い合わせ" },
   ]
 
+  const allNav = [ ...topNav, ...footerNav ]
+
   const getInitialTaps = async () => {
     try {
       setLoading(true);
@@ -93,7 +95,10 @@ export function App({ gmApiKey }) {
           <div className="overlay-content">
             <span className="closebtn" onClick={handleNav} >&times;</span>
             <div className="nav-container">
-              { topNav.map((el, i) => <a href={el.href} key={i}>{el.title}</a>) }
+              { allNav.map((el, i) => <a href={el.href} key={i}>{el.title}</a>) }
+            </div>
+            <div className="nav-container">
+              { socialNav.map((el, i) => <a href={el.href} key={i}><i className={`bi ${el.iconName}`} /></a>) }
             </div>
           </div>
         </div>
